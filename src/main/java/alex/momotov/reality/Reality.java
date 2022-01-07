@@ -1,9 +1,8 @@
 package alex.momotov.reality;
 
 import alex.momotov.Utils;
+import alex.momotov.reality.field.Field;
 import alex.momotov.reality.objects.Food;
-import alex.momotov.reality.objects.Obj;
-import alex.momotov.reality.objects.Space;
 import alex.momotov.reality.objects.Snake;
 import jline.ConsoleReader;
 import static alex.momotov.reality.Direction.*;
@@ -16,7 +15,7 @@ import java.util.Random;
 public class Reality {
 
 
-    private final Field<Obj> field;
+    private final Field field;
     private Direction direction;
     private final Queue<XY> tail;
     private final XY head;
@@ -26,8 +25,7 @@ public class Reality {
     private static final int FOOD_INTERVAL_MS = 2_000;
 
     public Reality(int rows, int cols) {
-        field = new Field<>(rows, cols);
-        field.fill(() -> new Space());
+        field = new Field(rows, cols);
         field.print();
 
         direction = Direction.DOWN;
@@ -95,15 +93,16 @@ public class Reality {
         tail.add(new XY(head.x, head.y));
         if (tail.size() > tailLength) {
             XY toRemove = tail.remove();
-            field.set(toRemove.x, toRemove.y, new Space());
+            field.remove(toRemove.x, toRemove.y, Snake.class);
         }
 
         head.x = newRow;
         head.y = newCol;
-        if (field.get(head.x, head.y) instanceof Food) {
+        if (field.get(head.x, head.y).contains(Food.class)) {
             tailLength += 1;
+            field.remove(head.x, head.y, Food.class);
         }
-        field.set(head.x, head.y, new Snake());
+        field.add(head.x, head.y, new Snake());
     }
 
     private void foodLoop() {
@@ -112,7 +111,7 @@ public class Reality {
             public void run() {
                 while (true) {
                     XY food = generateFood();
-                    field.set(food.x, food.y, new Food());
+                    field.add(food.x, food.y, new Food());
                     Utils.sleep(FOOD_INTERVAL_MS);
                 }
             }
