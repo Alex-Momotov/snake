@@ -9,13 +9,9 @@ import java.util.function.Supplier;
 public class Field<T> {
 
     private final AtomicReferenceArray<AtomicReferenceArray<T>> field;
-    public final int rows;
-    public final int cols;
     private final XY cursor;
 
     public Field(int rows, int cols) {
-        this.rows = rows;
-        this.cols = cols;
         this.field = new AtomicReferenceArray<>(rows);
         for (int i = 0; i < rows; i++)
             field.set(i, new AtomicReferenceArray<>(cols));
@@ -33,8 +29,7 @@ public class Field<T> {
     public synchronized void set(int row, int col, T obj) {
         field.get(row).set(col, obj);
         seek(row, col * 3);
-        System.out.print(" " + field.get(row).get(col) + " ");
-        cursor.y += 3;
+        sysPrint(" " + field.get(row).get(col) + " ");
     }
 
     public synchronized T get(int row, int col) {
@@ -44,30 +39,44 @@ public class Field<T> {
     public synchronized void print() {
         for (int r = 0; r < field.length(); r++) {
             for (int c = 0; c < field.get(0).length(); c++) {
-                System.out.print(" " + field.get(r).get(c) + " ");
-                cursor.y += 3;
+                sysPrint(" " + field.get(r).get(c) + " ");
             }
-            System.out.println();
-            cursor.x += 1;
+            sysPrintLn();
         }
         seek(0, 0);
     }
-    public synchronized void seek(int row, int col) {
-        if (row < cursor.x) {
-            System.out.print(Ansi.cursorUp(cursor.x - row));
-            cursor.x = row;
-        } else if (row > cursor.x) {
-            System.out.print(Ansi.cursorDown(row - cursor.x));
-            cursor.x = row;
-        }
 
-        if (col < cursor.y) {
+    public synchronized void seek(int row, int col) {
+        if (row < cursor.x)
+            System.out.print(Ansi.cursorUp(cursor.x - row));
+        else if (row > cursor.x)
+            System.out.print(Ansi.cursorDown(row - cursor.x));
+
+        if (col < cursor.y)
             System.out.print(Ansi.cursorLeft(cursor.y - col));
-            cursor.y = col;
-        } else if (col > cursor.y) {
+        else if (col > cursor.y)
             System.out.print(Ansi.cursorRight(col - cursor.y));
-            cursor.y = col;
-        }
+
+        cursor.x = row;
+        cursor.y = col;
+    }
+
+    private synchronized void sysPrint(String str) {
+        System.out.print(str);
+        cursor.y += 3;
+    }
+
+    private synchronized void sysPrintLn() {
+        System.out.println();
+        cursor.x += 1;
+    }
+
+    public synchronized int rows() {
+        return field.length();
+    }
+
+    public synchronized int cols() {
+        return field.get(0).length();
     }
 
 }

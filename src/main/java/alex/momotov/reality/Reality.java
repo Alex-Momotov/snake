@@ -13,7 +13,7 @@ import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.Random;
 
-public class Reality implements Runnable {
+public class Reality {
 
 
     private final Field<Obj> field;
@@ -23,7 +23,7 @@ public class Reality implements Runnable {
     private int tailLength = 1;
 
     private static final int STEP_MS = 121;
-    private static final int FOOD_INTERVAL_MS = 2_500;
+    private static final int FOOD_INTERVAL_MS = 2_000;
 
     public Reality(int rows, int cols) {
         field = new Field<>(rows, cols);
@@ -36,19 +36,24 @@ public class Reality implements Runnable {
 
         movementLoop();
         foodLoop();
+        keyboardLoop();
     }
 
-    @Override
-    public void run() {
-        try {
-            ConsoleReader reader = new ConsoleReader();
-            while (true) {
-                int keyCode = reader.readVirtualKey();
-                updateDirection(keyCode);
+    public void keyboardLoop() {
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    ConsoleReader reader = new ConsoleReader();
+                    while (true) {
+                        int keyCode = reader.readVirtualKey();
+                        updateDirection(keyCode);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        }.start();
     }
 
     private void updateDirection(int keyCode) {
@@ -79,12 +84,12 @@ public class Reality implements Runnable {
 
     private void updatePosition(int newRow, int newCol) {
         if (newRow < 0)
-            newRow = field.rows - 1;
+            newRow = field.rows() - 1;
         if (newCol < 0)
-            newCol = field.cols - 1;
-        if (newRow >= field.rows)
+            newCol = field.cols() - 1;
+        if (newRow >= field.rows())
             newRow = 0;
-        if (newCol >= field.cols)
+        if (newCol >= field.cols())
             newCol = 0;
 
         tail.add(new XY(head.x, head.y));
@@ -116,9 +121,9 @@ public class Reality implements Runnable {
 
     private XY generateFood() {
         Random rand = new Random();
-        XY food = new XY(rand.nextInt(field.rows), rand.nextInt(field.cols));
+        XY food = new XY(rand.nextInt(field.rows()), rand.nextInt(field.cols()));
         while (tail.contains(food) || head.equals(food)) {
-            food = new XY(rand.nextInt(field.rows), rand.nextInt(field.cols));
+            food = new XY(rand.nextInt(field.rows()), rand.nextInt(field.cols()));
         }
         return food;
     }
