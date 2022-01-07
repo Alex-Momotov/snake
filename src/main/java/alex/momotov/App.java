@@ -1,6 +1,9 @@
 package alex.momotov;
 
+import alex.momotov.reality.Field;
 import alex.momotov.reality.Reality;
+import alex.momotov.reality.objects.Obj;
+import alex.momotov.reality.objects.Space;
 
 
 import java.io.IOException;

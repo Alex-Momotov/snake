@@ -28,7 +28,7 @@ public class Reality implements Runnable {
     public Reality(int rows, int cols) {
         field = new Field<>(rows, cols);
         field.fill(() -> new Space());
-        field.monitor();
+        field.print();
 
         direction = Direction.DOWN;
         head = new XY(0, 0);
