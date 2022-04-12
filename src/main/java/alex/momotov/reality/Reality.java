@@ -22,7 +22,7 @@ public class Reality {
     private int tailLength = 1;
 
     private static final int STEP_MS = 121;
-    private static final int FOOD_INTERVAL_MS = 2_000;
+    private static final int FOOD_INTERVAL_MS = 3_000;
 
     public Reality(int rows, int cols) {
         field = new Field(rows, cols);
