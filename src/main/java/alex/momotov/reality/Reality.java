@@ -3,7 +3,8 @@ package alex.momotov.reality;
 import alex.momotov.Utils;
 import alex.momotov.reality.field.Field;
 import alex.momotov.reality.objects.Food;
-import alex.momotov.reality.objects.Snake;
+import alex.momotov.reality.objects.SnakeBody;
+import alex.momotov.reality.objects.SnakeHead;
 import jline.ConsoleReader;
 import static alex.momotov.reality.Direction.*;
 
@@ -93,16 +94,19 @@ public class Reality {
         tail.add(new XY(head.x, head.y));
         if (tail.size() > tailLength) {
             XY toRemove = tail.remove();
-            field.remove(toRemove.x, toRemove.y, Snake.class);
+            field.remove(toRemove.x, toRemove.y, SnakeBody.class);
         }
 
+        field.remove(head.x, head.y, SnakeHead.class);
+        field.add(head.x, head.y, new SnakeBody());
         head.x = newRow;
         head.y = newCol;
+        field.add(head.x, head.y, SnakeHead.fromDirection(direction));
+
         if (field.get(head.x, head.y).contains(Food.class)) {
             tailLength += 1;
             field.remove(head.x, head.y, Food.class);
         }
-        field.add(head.x, head.y, new Snake());
     }
 
     private void foodLoop() {
