@@ -12,7 +12,7 @@ public class App {
 
     public static void main(String[] args) throws IOException {
 
-        Reality reality = new Reality(20, 15);
+        Reality reality = new Reality(30, 23);
 
     }
 

@@ -1,0 +1,4 @@
+[] wall
+[] pause (Space)
+[] game over when wall collide
+[] game over when self collide

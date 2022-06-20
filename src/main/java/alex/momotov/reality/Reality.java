@@ -5,6 +5,7 @@ import alex.momotov.reality.field.Field;
 import alex.momotov.reality.objects.Food;
 import alex.momotov.reality.objects.SnakeBody;
 import alex.momotov.reality.objects.SnakeHead;
+import alex.momotov.reality.objects.Wall;
 import jline.ConsoleReader;
 import static alex.momotov.reality.Direction.*;
 
@@ -28,14 +29,30 @@ public class Reality {
     public Reality(int rows, int cols) {
         field = new Field(rows, cols);
         field.print();
+        addWalls();
 
         direction = Direction.DOWN;
-        head = new XY(0, 0);
+        head = new XY(1, 1);
         tail = new ArrayDeque<>(1000);
 
         movementLoop();
         foodLoop();
         keyboardLoop();
+    }
+
+    private void addWalls() {
+        for (int i = 0; i < field.cols(); i++) {
+            field.add(0, i, new Wall());
+        }
+        for (int i = 0; i < field.rows(); i++) {
+            field.add(i, 0, new Wall());
+        }
+        for (int i = 0; i < field.cols(); i++) {
+            field.add(field.rows() - 1, i, new Wall());
+        }
+        for (int i = 0; i < field.rows(); i++) {
+            field.add(i, field.cols() - 1, new Wall());
+        }
     }
 
     public void keyboardLoop() {

@@ -1,6 +1,7 @@
 package alex.momotov.reality.field;
 
 import alex.momotov.reality.objects.Obj;
+import com.github.tomaslanger.chalk.Chalk;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +59,7 @@ public class Cell {
     @Override
     public synchronized String toString() {
         if (objects.isEmpty())
-            return ".";
+            return Chalk.on(".").gray().bold().toString();
         else
             return objects.get(objects.size() - 1).toString();
     }
