@@ -6,6 +6,6 @@ public class Wall extends Obj {
 
     @Override
     String repr() {
-        return Chalk.on("$").gray().bold().toString();
+        return Chalk.on("+").gray().bold().toString();
     }
 }

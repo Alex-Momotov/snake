@@ -3,6 +3,7 @@ package alex.momotov.reality.field;
 import alex.momotov.reality.XY;
 import alex.momotov.reality.objects.Obj;
 import com.github.tomaslanger.chalk.Ansi;
+import com.github.tomaslanger.chalk.Chalk;
 
 import java.util.concurrent.atomic.AtomicReferenceArray;
 
@@ -85,12 +86,17 @@ public class Field {
         carret.y = col;
     }
 
-    private synchronized void sysPrint(String str) {
+    public synchronized void sysPrint(String str) {
         System.out.print(str);
         carret.y += 3;
     }
 
-    private synchronized void sysPrintLn() {
+    public synchronized void sysPrintTest(String str, int length) {
+        System.out.print(str);
+        carret.y += length;
+    }
+
+    public synchronized void sysPrintLn() {
         System.out.println();
         carret.x += 1;
     }
@@ -101,6 +107,14 @@ public class Field {
 
     public synchronized int cols() {
         return field.get(0).length();
+    }
+
+    public synchronized void message(String message, int msgLength) {
+        int midRow = this.rows() / 2;
+        int midCol = this.cols() * 3 / 2;
+        int halfMessage = msgLength / 2;
+        seek(midRow, midCol - halfMessage);
+        sysPrintTest(message, msgLength);
     }
 
 }

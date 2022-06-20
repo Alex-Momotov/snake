@@ -6,6 +6,7 @@ import alex.momotov.reality.objects.Food;
 import alex.momotov.reality.objects.SnakeBody;
 import alex.momotov.reality.objects.SnakeHead;
 import alex.momotov.reality.objects.Wall;
+import com.github.tomaslanger.chalk.Chalk;
 import jline.ConsoleReader;
 import static alex.momotov.reality.Direction.*;
 
@@ -29,7 +30,7 @@ public class Reality {
     public Reality(int rows, int cols) {
         field = new Field(rows, cols);
         field.print();
-        addWalls();
+         addWalls();
 
         direction = Direction.DOWN;
         head = new XY(1, 1);
@@ -99,14 +100,11 @@ public class Reality {
     }
 
     private void updatePosition(int newRow, int newCol) {
-        if (newRow < 0)
-            newRow = field.rows() - 1;
-        if (newCol < 0)
-            newCol = field.cols() - 1;
-        if (newRow >= field.rows())
-            newRow = 0;
-        if (newCol >= field.cols())
-            newCol = 0;
+        if (newRow < 0 || newCol < 0 || newRow >= field.rows() || newCol >= field.cols()
+                || field.get(newRow, newCol).contains(Wall.class)
+                || field.get(newRow, newCol).contains(SnakeBody.class)) {
+            gameOver();
+        }
 
         tail.add(new XY(head.x, head.y));
         if (tail.size() > tailLength) {
@@ -141,10 +139,19 @@ public class Reality {
 
     private XY generateFood() {
         Random rand = new Random();
-        XY food = new XY(rand.nextInt(field.rows()), rand.nextInt(field.cols()));
+        XY food = new XY(rand.nextInt(field.rows() - 2) + 1, rand.nextInt(field.cols() - 2) + 1);
         while (tail.contains(food) || head.equals(food)) {
             food = new XY(rand.nextInt(field.rows()), rand.nextInt(field.cols()));
         }
         return food;
+    }
+
+    private void gameOver() {
+        String message = "Game Over";
+        field.message(Chalk.on(message).red().bold().toString(), message.length());
+
+        field.seek(field.rows(), field.cols());
+        field.sysPrintLn();
+        System.exit(0);
     }
 }
