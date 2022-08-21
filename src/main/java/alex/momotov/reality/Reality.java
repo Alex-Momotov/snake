@@ -28,6 +28,7 @@ public class Reality {
     private static final int FOOD_INTERVAL_MS = 3_000;
 
     public Reality(int rows, int cols) {
+        turnOffTerminalCursor();
         field = new Field(rows, cols);
         field.print();
          addWalls();
@@ -39,6 +40,10 @@ public class Reality {
         movementLoop();
         foodLoop();
         keyboardLoop();
+    }
+
+    static void turnOffTerminalCursor() {
+        System.out.println("\u001b[" + "?25l");
     }
 
     private void addWalls() {
