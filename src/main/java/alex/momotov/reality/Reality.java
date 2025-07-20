@@ -4,10 +4,11 @@ import alex.momotov.Utils;
 import alex.momotov.reality.field.Field;
 import alex.momotov.reality.objects.Food;
 import alex.momotov.reality.objects.SnakeBody;
-import alex.momotov.reality.objects.SnakeHead;
 import alex.momotov.reality.objects.Wall;
 import com.github.tomaslanger.chalk.Chalk;
-import jline.ConsoleReader;
+import jline.console.ConsoleReader;
+
+import static alex.momotov.App.*;
 import static alex.momotov.reality.Direction.*;
 
 import java.io.IOException;
@@ -17,21 +18,18 @@ import java.util.Random;
 
 public class Reality {
 
-
     private final Field field;
     private Direction direction;
     private final Queue<XY> tail;
     private final XY head;
     private int tailLength = 1;
 
-    private static final int STEP_MS = 121;
-    private static final int FOOD_INTERVAL_MS = 3_000;
-
-    public Reality(int rows, int cols) {
+    public Reality() {
         turnOffTerminalCursor();
-        field = new Field(rows, cols);
+        field = new Field(ROWS, COLS);
         field.print();
-         addWalls();
+        if (WALLS)
+            addWalls();
 
         direction = Direction.DOWN;
         head = new XY(1, 1);
@@ -68,7 +66,7 @@ public class Reality {
                 try {
                     ConsoleReader reader = new ConsoleReader();
                     while (true) {
-                        int keyCode = reader.readVirtualKey();
+                        int keyCode = reader.readCharacter();
                         updateDirection(keyCode);
                     }
                 } catch (IOException e) {
@@ -80,7 +78,7 @@ public class Reality {
 
     private void updateDirection(int keyCode) {
         Direction newDirection = Direction.fromCode(keyCode);
-        if (direction.isOposite(newDirection))
+        if (newDirection == null || direction.isOposite(newDirection))
             return;
         direction = newDirection;
     }
@@ -105,9 +103,16 @@ public class Reality {
     }
 
     private void updatePosition(int newRow, int newCol) {
-        if (newRow < 0 || newCol < 0 || newRow >= field.rows() || newCol >= field.cols()
-                || field.get(newRow, newCol).contains(Wall.class)
-                || field.get(newRow, newCol).contains(SnakeBody.class)) {
+        if (newRow < 0)
+            newRow = field.rows() - 1;
+        if (newCol < 0)
+            newCol = field.cols() - 1;
+        if (newRow >= field.rows())
+            newRow = 0;
+        if (newCol >= field.cols())
+            newCol = 0;
+
+        if (field.get(newRow, newCol).contains(Wall.class) || field.get(newRow, newCol).contains(SnakeBody.class)) {
             gameOver();
         }
 
@@ -117,11 +122,9 @@ public class Reality {
             field.remove(toRemove.x, toRemove.y, SnakeBody.class);
         }
 
-        field.remove(head.x, head.y, SnakeHead.class);
-        field.add(head.x, head.y, new SnakeBody());
         head.x = newRow;
         head.y = newCol;
-        field.add(head.x, head.y, SnakeHead.fromDirection(direction));
+        field.add(head.x, head.y, new SnakeBody());
 
         if (field.get(head.x, head.y).contains(Food.class)) {
             tailLength += 1;

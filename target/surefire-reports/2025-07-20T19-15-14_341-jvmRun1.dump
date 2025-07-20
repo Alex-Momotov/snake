@@ -1,0 +1,136 @@
+# Created at 2025-07-20T19:15:26.924
+Exiting self fork JVM. Received SHUTDOWN command from Maven shutdown hook.
+Thread dump before exiting the process (72085@VONHHXR41441C):
+"main" 
+   java.lang.Thread.State: RUNNABLE
+        at app//jline.internal.InputStreamReader.read(InputStreamReader.java:224)
+        at app//jline.internal.InputStreamReader.read(InputStreamReader.java:194)
+        at app//jline.console.ConsoleReader.readCharacter(ConsoleReader.java:2143)
+        at app//jline.console.ConsoleReader.readCharacter(ConsoleReader.java:2133)
+        at app//alex.momotov.reality.DirectionTest.name(DirectionTest.java:38)
+        at java.base@17.0.15/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+        at java.base@17.0.15/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+        at java.base@17.0.15/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+        at java.base@17.0.15/java.lang.reflect.Method.invoke(Method.java:569)
+        at app//org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)
+        at app//org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+        at app//org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:56)
+        at app//org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+        at app//org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+        at app//org.junit.runners.BlockJUnit4ClassRunner$1.evaluate(BlockJUnit4ClassRunner.java:100)
+        at app//org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:366)
+        at app//org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:103)
+        at app//org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:63)
+        at app//org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
+        at app//org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
+        at app//org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
+        at app//org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
+        at app//org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
+        at app//org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+        at app//org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+        at app//org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:316)
+        at app//org.apache.maven.surefire.junit4.JUnit4Provider.executeWithRerun(JUnit4Provider.java:240)
+        at app//org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:214)
+        at app//org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:155)
+        at app//org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
+        at app//org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
+        at app//org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
+        at app//org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
+
+"Reference Handler" 
+   java.lang.Thread.State: RUNNABLE
+        at java.base@17.0.15/java.lang.ref.Reference.waitForReferencePendingList(Native Method)
+        at java.base@17.0.15/java.lang.ref.Reference.processPendingReferences(Reference.java:253)
+        at java.base@17.0.15/java.lang.ref.Reference$ReferenceHandler.run(Reference.java:215)
+
+"Finalizer" 
+   java.lang.Thread.State: WAITING
+        at java.base@17.0.15/java.lang.Object.wait(Native Method)
+        at java.base@17.0.15/java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:155)
+        at java.base@17.0.15/java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:176)
+        at java.base@17.0.15/java.lang.ref.Finalizer$FinalizerThread.run(Finalizer.java:172)
+
+"Signal Dispatcher" 
+   java.lang.Thread.State: RUNNABLE
+
+"Notification Thread" 
+   java.lang.Thread.State: RUNNABLE
+
+"Common-Cleaner" 
+   java.lang.Thread.State: TIMED_WAITING
+        at java.base@17.0.15/java.lang.Object.wait(Native Method)
+        at java.base@17.0.15/java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:155)
+        at java.base@17.0.15/jdk.internal.ref.CleanerImpl.run(CleanerImpl.java:140)
+        at java.base@17.0.15/java.lang.Thread.run(Thread.java:840)
+        at java.base@17.0.15/jdk.internal.misc.InnocuousThread.run(InnocuousThread.java:162)
+
+"surefire-forkedjvm-stream-flusher" 
+   java.lang.Thread.State: TIMED_WAITING
+        at java.base@17.0.15/jdk.internal.misc.Unsafe.park(Native Method)
+        at java.base@17.0.15/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:252)
+        at java.base@17.0.15/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:1679)
+        at java.base@17.0.15/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1182)
+        at java.base@17.0.15/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+        at java.base@17.0.15/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1062)
+        at java.base@17.0.15/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1122)
+        at java.base@17.0.15/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+        at java.base@17.0.15/java.lang.Thread.run(Thread.java:840)
+
+"surefire-forkedjvm-command-thread" 
+   java.lang.Thread.State: RUNNABLE
+        at java.management@17.0.15/sun.management.ThreadImpl.getThreadInfo1(Native Method)
+        at java.management@17.0.15/sun.management.ThreadImpl.getThreadInfo(ThreadImpl.java:197)
+        at app//org.apache.maven.surefire.booter.ForkedBooter.generateThreadDump(ForkedBooter.java:579)
+        at app//org.apache.maven.surefire.booter.ForkedBooter.access$600(ForkedBooter.java:79)
+        at app//org.apache.maven.surefire.booter.ForkedBooter$4.update(ForkedBooter.java:315)
+        at app//org.apache.maven.surefire.booter.CommandReader$CommandRunnable.callListeners(CommandReader.java:357)
+        at app//org.apache.maven.surefire.booter.CommandReader$CommandRunnable.exitByConfiguration(CommandReader.java:367)
+        at app//org.apache.maven.surefire.booter.CommandReader$CommandRunnable.run(CommandReader.java:330)
+        at java.base@17.0.15/java.lang.Thread.run(Thread.java:840)
+
+"process reaper (pid 72540)" 
+   java.lang.Thread.State: RUNNABLE
+        at java.base@17.0.15/java.lang.ProcessHandleImpl.waitForProcessExit0(Native Method)
+        at java.base@17.0.15/java.lang.ProcessHandleImpl$1.run(ProcessHandleImpl.java:150)
+        at java.base@17.0.15/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+        at java.base@17.0.15/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+        at java.base@17.0.15/java.lang.Thread.run(Thread.java:840)
+
+"NonBlockingInputStreamThread" 
+   java.lang.Thread.State: WAITING
+        at java.base@17.0.15/java.lang.Object.wait(Native Method)
+        at app//jline.internal.NonBlockingInputStream.run(NonBlockingInputStream.java:275)
+        at java.base@17.0.15/java.lang.Thread.run(Thread.java:840)
+
+"SIGHUP handler" 
+   java.lang.Thread.State: WAITING
+        at java.base@17.0.15/java.lang.Object.wait(Native Method)
+        at java.base@17.0.15/java.lang.Thread.join(Thread.java:1313)
+        at java.base@17.0.15/java.lang.Thread.join(Thread.java:1381)
+        at java.base@17.0.15/java.lang.ApplicationShutdownHooks.runHooks(ApplicationShutdownHooks.java:107)
+        at java.base@17.0.15/java.lang.ApplicationShutdownHooks$1.run(ApplicationShutdownHooks.java:46)
+        at java.base@17.0.15/java.lang.Shutdown.runHooks(Shutdown.java:130)
+        at java.base@17.0.15/java.lang.Shutdown.exit(Shutdown.java:173)
+        at java.base@17.0.15/java.lang.Terminator$1.handle(Terminator.java:51)
+        at java.base@17.0.15/jdk.internal.misc.Signal$1.run(Signal.java:219)
+        at java.base@17.0.15/java.lang.Thread.run(Thread.java:840)
+
+"JLine Shutdown Hook" 
+   java.lang.Thread.State: RUNNABLE
+        at java.base@17.0.15/java.io.FileInputStream.readBytes(Native Method)
+        at java.base@17.0.15/java.io.FileInputStream.read(FileInputStream.java:276)
+        at java.base@17.0.15/java.io.BufferedInputStream.fill(BufferedInputStream.java:244)
+        at java.base@17.0.15/java.io.BufferedInputStream.read(BufferedInputStream.java:263)
+        at app//jline.internal.TerminalLineSettings.waitAndCapture(TerminalLineSettings.java:331)
+        at app//jline.internal.TerminalLineSettings.exec(TerminalLineSettings.java:311)
+        at app//jline.internal.TerminalLineSettings.stty(TerminalLineSettings.java:282)
+        at app//jline.internal.TerminalLineSettings.set(TerminalLineSettings.java:148)
+        at app//jline.internal.TerminalLineSettings.restore(TerminalLineSettings.java:138)
+        at app//jline.UnixTerminal.restore(UnixTerminal.java:108)
+        at app//jline.TerminalSupport$1.run(TerminalSupport.java:52)
+        at app//jline.internal.ShutdownHooks.runTasks(ShutdownHooks.java:66)
+        at app//jline.internal.ShutdownHooks.access$000(ShutdownHooks.java:22)
+        at app//jline.internal.ShutdownHooks$1.run(ShutdownHooks.java:47)
+
+
+

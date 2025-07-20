@@ -1,6 +1,10 @@
 package alex.momotov.reality;
 
+import jline.console.ConsoleReader;
 import org.junit.Test;
+
+import java.io.IOException;
+
 import static org.junit.Assert.*;
 
 public class DirectionTest {
@@ -25,4 +29,5 @@ public class DirectionTest {
         assertFalse(Direction.RIGHT.isOposite(Direction.UP));
         assertFalse(Direction.RIGHT.isOposite(Direction.DOWN));
     }
+
 }

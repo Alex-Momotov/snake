@@ -7,15 +7,14 @@ import java.io.IOException;
 
 public class App {
 
-
-
+    public static final int ROWS = 30;
+    public static final int COLS = 23;
+    public static final int STEP_MS = 121;
+    public static final int FOOD_INTERVAL_MS = 3_000;
+    public static final boolean WALLS = false;
 
     public static void main(String[] args) throws IOException {
-
-        Reality reality = new Reality(30, 23);
-
+        Reality reality = new Reality();
     }
-
-
 
 }

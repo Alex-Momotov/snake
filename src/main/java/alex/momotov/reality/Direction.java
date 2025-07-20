@@ -2,10 +2,10 @@ package alex.momotov.reality;
 
 public enum Direction {
 
-    UP(16),
-    DOWN(14),
-    LEFT(2),
-    RIGHT(6);
+    UP(65),
+    DOWN(66),
+    LEFT(68),
+    RIGHT(67);
 
     public final int keyCode;
 
@@ -18,7 +18,7 @@ public enum Direction {
             if (d.keyCode == keyCode)
                 return d;
         }
-        throw new RuntimeException("Invalid key code - not a direction");
+        return null;
     }
 
     public boolean isOposite(Direction direction) {

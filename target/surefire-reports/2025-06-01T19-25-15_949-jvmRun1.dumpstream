@@ -1,0 +1,54 @@
+# Created at 2025-06-01T19:25:16.728
+Corrupted channel by directly writing to native stream in forked JVM 1. Stream '#'.
+
+# Created at 2025-06-01T19:25:16.729
+Corrupted channel by directly writing to native stream in forked JVM 1. Stream '# A fatal error has been detected by the Java Runtime Environment:'.
+
+# Created at 2025-06-01T19:25:16.729
+Corrupted channel by directly writing to native stream in forked JVM 1. Stream '#'.
+
+# Created at 2025-06-01T19:25:16.729
+Corrupted channel by directly writing to native stream in forked JVM 1. Stream '#  SIGSEGV (0xb) at pc=0x0000000109cc4b95, pid=10100, tid=8451'.
+
+# Created at 2025-06-01T19:25:16.730
+Corrupted channel by directly writing to native stream in forked JVM 1. Stream '#'.
+
+# Created at 2025-06-01T19:25:16.730
+Corrupted channel by directly writing to native stream in forked JVM 1. Stream '# JRE version: OpenJDK Runtime Environment Homebrew (11.0.27) (build 11.0.27+0)'.
+
+# Created at 2025-06-01T19:25:16.731
+Corrupted channel by directly writing to native stream in forked JVM 1. Stream '# Java VM: OpenJDK 64-Bit Server VM Homebrew (11.0.27+0, mixed mode, tiered, compressed oops, g1 gc, bsd-amd64)'.
+
+# Created at 2025-06-01T19:25:16.731
+Corrupted channel by directly writing to native stream in forked JVM 1. Stream '# Problematic frame:'.
+
+# Created at 2025-06-01T19:25:16.731
+Corrupted channel by directly writing to native stream in forked JVM 1. Stream '# V  [libjvm.dylib+0x40bb95]  jni_SetStaticIntField+0xae'.
+
+# Created at 2025-06-01T19:25:16.732
+Corrupted channel by directly writing to native stream in forked JVM 1. Stream '#'.
+
+# Created at 2025-06-01T19:25:16.732
+Corrupted channel by directly writing to native stream in forked JVM 1. Stream '# No core dump will be written. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again'.
+
+# Created at 2025-06-01T19:25:16.732
+Corrupted channel by directly writing to native stream in forked JVM 1. Stream '#'.
+
+# Created at 2025-06-01T19:25:16.733
+Corrupted channel by directly writing to native stream in forked JVM 1. Stream '# An error report file with more information is saved as:'.
+
+# Created at 2025-06-01T19:25:16.754
+Corrupted channel by directly writing to native stream in forked JVM 1. Stream '# /Users/alex/_docs/_projects/snake/hs_err_pid10100.log'.
+
+# Created at 2025-06-01T19:25:16.754
+Corrupted channel by directly writing to native stream in forked JVM 1. Stream '#'.
+
+# Created at 2025-06-01T19:25:16.755
+Corrupted channel by directly writing to native stream in forked JVM 1. Stream '# If you would like to submit a bug report, please visit:'.
+
+# Created at 2025-06-01T19:25:16.757
+Corrupted channel by directly writing to native stream in forked JVM 1. Stream '#   https://github.com/Homebrew/homebrew-core/issues'.
+
+# Created at 2025-06-01T19:25:16.757
+Corrupted channel by directly writing to native stream in forked JVM 1. Stream '#'.
+
