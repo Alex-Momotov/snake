@@ -44,6 +44,10 @@ public class Reality {
         System.out.println("\u001b[" + "?25l");
     }
 
+    static void turnOnTerminalCursor() {
+        System.out.println("\u001b[?25h");
+    }
+
     private void addWalls() {
         for (int i = 0; i < field.cols(); i++) {
             field.add(0, i, new Wall());
@@ -112,7 +116,7 @@ public class Reality {
         if (newCol >= field.cols())
             newCol = 0;
 
-        if (SNAKE_COLLISION && (field.get(newRow, newCol).contains(Wall.class) || field.get(newRow, newCol).contains(SnakeBody.class))) {
+        if ((COLLISION && field.get(newRow, newCol).contains(SnakeBody.class)) || field.get(newRow, newCol).contains(Wall.class)) {
             gameOver();
         }
 
@@ -160,6 +164,7 @@ public class Reality {
 
         field.seek(field.rows(), field.cols());
         field.sysPrintLn();
+        turnOnTerminalCursor();
         System.exit(0);
     }
 }
