@@ -2,4 +2,4 @@
 dependency-reduced-pom.xml
 
 target/*
-!target/snake-1.0.jar
+#!target/snake-1.0.jar
