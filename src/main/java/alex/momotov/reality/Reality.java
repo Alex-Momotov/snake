@@ -112,7 +112,7 @@ public class Reality {
         if (newCol >= field.cols())
             newCol = 0;
 
-        if (field.get(newRow, newCol).contains(Wall.class) || field.get(newRow, newCol).contains(SnakeBody.class)) {
+        if (SNAKE_COLLISION && (field.get(newRow, newCol).contains(Wall.class) || field.get(newRow, newCol).contains(SnakeBody.class))) {
             gameOver();
         }
 
