@@ -4,6 +4,7 @@ import alex.momotov.Utils;
 import alex.momotov.reality.field.Field;
 import alex.momotov.reality.objects.Food;
 import alex.momotov.reality.objects.SnakeBody;
+import alex.momotov.reality.objects.SnakeBody2;
 import alex.momotov.reality.objects.Wall;
 import com.github.tomaslanger.chalk.Chalk;
 import jline.console.ConsoleReader;
@@ -22,6 +23,9 @@ public class Reality {
     private Direction direction;
     private final Deque<XY> snake;
 
+    private Direction2 direction2;
+    private final Deque<XY> snake2;
+
     public Reality() {
         turnOffTerminalCursor();
         field = new Field(ROWS, COLS);
@@ -33,6 +37,11 @@ public class Reality {
         snake = new ArrayDeque<>(1000);
         snake.add(new XY(1, 1));
         snake.add(new XY(1, 2));
+
+        direction2 = Direction2.DOWN;
+        snake2 = new ArrayDeque<>(1000);
+        snake2.add(new XY(5, 1));
+        snake2.add(new XY(5, 2));
 
         movementLoop();
         foodLoop();
@@ -71,12 +80,20 @@ public class Reality {
                     while (true) {
                         int keyCode = reader.readCharacter();
                         updateDirection(keyCode);
+                        updateDirection2(keyCode);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         }.start();
+    }
+
+    private void updateDirection2(int keyCode) {
+        Direction2 newDirection = Direction2.fromCode(keyCode);
+        if (newDirection == null || direction2.isOposite(newDirection))
+            return;
+        direction2 = newDirection;
     }
 
     private void updateDirection(int keyCode) {
@@ -100,6 +117,17 @@ public class Reality {
                         updatePosition(head.x, head.y - 1);
                     else if (direction == RIGHT)
                         updatePosition(head.x, head.y + 1);
+
+                    XY head2 = snake2.peekLast();
+                    if (direction2 == Direction2.UP)
+                        updatePosition2(head2.x - 1, head2.y);
+                    else if (direction2 == Direction2.DOWN)
+                        updatePosition2(head2.x + 1, head2.y);
+                    else if (direction2 == Direction2.LEFT)
+                        updatePosition2(head2.x, head2.y - 1);
+                    else if (direction2 == Direction2.RIGHT)
+                        updatePosition2(head2.x, head2.y + 1);
+
                     Utils.sleep(STEP_MS);
                 }
             }
@@ -126,9 +154,38 @@ public class Reality {
 
         if (field.get(newHead.x, newHead.y).contains(Food.class)) {
             field.remove(newHead.x, newHead.y, Food.class);
+        } else if (field.get(newHead.x, newHead.y).contains(SnakeBody2.class)) {
+            field.remove(newHead.x, newHead.y, SnakeBody2.class);
+            snake2.remove();
         } else {
             XY toRemove = snake.remove();
             field.remove(toRemove.x, toRemove.y, SnakeBody.class);
+        }
+    }
+
+    private void updatePosition2(int newRow, int newCol) {
+        if (newRow < 0)
+            newRow = field.rows() - 1;
+        if (newCol < 0)
+            newCol = field.cols() - 1;
+        if (newRow >= field.rows())
+            newRow = 0;
+        if (newCol >= field.cols())
+            newCol = 0;
+
+        if ((COLLISION && field.get(newRow, newCol).contains(SnakeBody2.class)) || field.get(newRow, newCol).contains(Wall.class)) {
+            gameOver();
+        }
+
+        XY newHead = new XY(newRow, newCol);
+        snake2.add(newHead);
+        field.add(newHead.x, newHead.y, new SnakeBody2());
+
+        if (field.get(newHead.x, newHead.y).contains(Food.class)) {
+            field.remove(newHead.x, newHead.y, Food.class);
+        } else {
+            XY toRemove = snake2.remove();
+            field.remove(toRemove.x, toRemove.y, SnakeBody2.class);
         }
     }
 

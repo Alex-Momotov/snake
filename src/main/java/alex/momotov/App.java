@@ -1,6 +1,7 @@
 package alex.momotov;
 
 import alex.momotov.reality.Reality;
+import jline.console.ConsoleReader;
 
 
 import java.io.IOException;
