@@ -4,6 +4,7 @@ import alex.momotov.reality.objects.Obj;
 import com.github.tomaslanger.chalk.Chalk;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Cell {
@@ -18,22 +19,13 @@ public class Cell {
         objects.add(obj);
     }
 
-    public synchronized Obj remove(Obj obj) {
-        objects.remove(obj);
-        return obj;
-    }
-
-    public synchronized Obj remove(Class cls) {
-        for (Obj o: objects) {
-            if (o.getClass().equals(cls))
-                objects.remove(o);
-                return o;
+    public synchronized void remove(Class cls) {
+        for (Iterator<Obj> iterator = objects.iterator(); iterator.hasNext();) {
+            if (iterator.next().getClass().equals(cls)) {
+                iterator.remove();
+                return;
+            }
         }
-        return null;
-    }
-
-    public synchronized boolean contains(Obj obj) {
-        return objects.contains(obj);
     }
 
     public synchronized boolean contains(Class cls) {

@@ -33,22 +33,10 @@ public class Field {
         return field.get(row).get(col);
     }
 
-    public synchronized Obj remove(int row, int col, Obj obj) {
-        Obj result = get(row, col).remove(obj);
+    public synchronized void remove(int row, int col, Class cls) {
+        get(row, col).remove(cls);
         seek(row, col * 3);
         sysPrint(" " + field.get(row).get(col) + " ");
-        return get(row, col).remove(obj);
-    }
-
-    public synchronized Obj remove(int row, int col, Class cls) {
-        Obj result = get(row, col).remove(cls);
-        seek(row, col * 3);
-        sysPrint(" " + field.get(row).get(col) + " ");
-        return result;
-    }
-
-    public synchronized boolean contains(int row, int col, Obj obj) {
-        return get(row, col).contains(obj);
     }
 
     public synchronized boolean contains(int row, int col, Class cls) {

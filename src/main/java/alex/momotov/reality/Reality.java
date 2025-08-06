@@ -13,16 +13,14 @@ import static alex.momotov.reality.Direction.*;
 
 import java.io.IOException;
 import java.util.ArrayDeque;
-import java.util.Queue;
+import java.util.Deque;
 import java.util.Random;
 
 public class Reality {
 
     private final Field field;
     private Direction direction;
-    private final Queue<XY> tail;
-    private final XY head;
-    private int tailLength = 1;
+    private final Deque<XY> snake;
 
     public Reality() {
         turnOffTerminalCursor();
@@ -31,9 +29,10 @@ public class Reality {
         if (WALLS)
             addWalls();
 
-        direction = Direction.DOWN;
-        head = new XY(1, 1);
-        tail = new ArrayDeque<>(1000);
+        direction = DOWN;
+        snake = new ArrayDeque<>(1000);
+        snake.add(new XY(1, 1));
+        snake.add(new XY(1, 2));
 
         movementLoop();
         foodLoop();
@@ -92,6 +91,7 @@ public class Reality {
             @Override
             public void run() {
                 while (true) {
+                    XY head = snake.peekLast();
                     if (direction == UP)
                         updatePosition(head.x - 1, head.y);
                     else if (direction == DOWN)
@@ -120,19 +120,15 @@ public class Reality {
             gameOver();
         }
 
-        tail.add(new XY(head.x, head.y));
-        if (tail.size() > tailLength) {
-            XY toRemove = tail.remove();
+        XY newHead = new XY(newRow, newCol);
+        snake.add(newHead);
+        field.add(newHead.x, newHead.y, new SnakeBody());
+
+        if (field.get(newHead.x, newHead.y).contains(Food.class)) {
+            field.remove(newHead.x, newHead.y, Food.class);
+        } else {
+            XY toRemove = snake.remove();
             field.remove(toRemove.x, toRemove.y, SnakeBody.class);
-        }
-
-        head.x = newRow;
-        head.y = newCol;
-        field.add(head.x, head.y, new SnakeBody());
-
-        if (field.get(head.x, head.y).contains(Food.class)) {
-            tailLength += 1;
-            field.remove(head.x, head.y, Food.class);
         }
     }
 
@@ -152,7 +148,7 @@ public class Reality {
     private XY generateFood() {
         Random rand = new Random();
         XY food = new XY(rand.nextInt(field.rows() - 2) + 1, rand.nextInt(field.cols() - 2) + 1);
-        while (tail.contains(food) || head.equals(food)) {
+        while (field.get(food.x,  food.y).contains(SnakeBody.class)) {
             food = new XY(rand.nextInt(field.rows()), rand.nextInt(field.cols()));
         }
         return food;
