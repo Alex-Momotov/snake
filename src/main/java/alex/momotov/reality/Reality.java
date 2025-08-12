@@ -109,6 +109,8 @@ public class Reality {
             public void run() {
                 while (true) {
                     XY head = snake.peekLast();
+                    if (head == null && s)
+                        gameOver("Magenta Snake Won!");
                     if (direction == UP)
                         updatePosition(head.x - 1, head.y);
                     else if (direction == DOWN)
@@ -118,7 +120,10 @@ public class Reality {
                     else if (direction == RIGHT)
                         updatePosition(head.x, head.y + 1);
 
+
                     XY head2 = snake2.peekLast();
+                    if (head2 == null)
+                        gameOver("Green Snake Won!");
                     if (direction2 == Direction2.UP)
                         updatePosition2(head2.x - 1, head2.y);
                     else if (direction2 == Direction2.DOWN)
@@ -145,7 +150,7 @@ public class Reality {
             newCol = 0;
 
         if ((COLLISION && field.get(newRow, newCol).contains(SnakeBody.class)) || field.get(newRow, newCol).contains(Wall.class)) {
-            gameOver();
+            gameOver("Game Over");
         }
 
         XY newHead = new XY(newRow, newCol);
@@ -154,9 +159,9 @@ public class Reality {
 
         if (field.get(newHead.x, newHead.y).contains(Food.class)) {
             field.remove(newHead.x, newHead.y, Food.class);
-        } else if (field.get(newHead.x, newHead.y).contains(SnakeBody2.class)) {
+        } else if (field.get(newHead.x, newHead.y).contains(SnakeBody2.class) && snake.size() >= snake2.size()) {
             field.remove(newHead.x, newHead.y, SnakeBody2.class);
-            snake2.remove();
+            snake2.remove(newHead);
         } else {
             XY toRemove = snake.remove();
             field.remove(toRemove.x, toRemove.y, SnakeBody.class);
@@ -174,7 +179,7 @@ public class Reality {
             newCol = 0;
 
         if ((COLLISION && field.get(newRow, newCol).contains(SnakeBody2.class)) || field.get(newRow, newCol).contains(Wall.class)) {
-            gameOver();
+            gameOver("Game Over");
         }
 
         XY newHead = new XY(newRow, newCol);
@@ -183,6 +188,9 @@ public class Reality {
 
         if (field.get(newHead.x, newHead.y).contains(Food.class)) {
             field.remove(newHead.x, newHead.y, Food.class);
+        } else if (field.get(newHead.x, newHead.y).contains(SnakeBody.class) && snake2.size() >= snake.size()) {
+            field.remove(newHead.x, newHead.y, SnakeBody.class);
+            snake.remove(newHead);
         } else {
             XY toRemove = snake2.remove();
             field.remove(toRemove.x, toRemove.y, SnakeBody2.class);
@@ -211,9 +219,8 @@ public class Reality {
         return food;
     }
 
-    private void gameOver() {
-        String message = "Game Over";
-        field.message(Chalk.on(message).red().bold().toString(), message.length());
+    private void gameOver(String msg) {
+        field.message(Chalk.on(msg).red().bold().toString(), msg.length());
 
         field.seek(field.rows(), field.cols());
         field.sysPrintLn();
