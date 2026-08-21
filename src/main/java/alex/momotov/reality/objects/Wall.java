@@ -1,11 +1,13 @@
 package alex.momotov.reality.objects;
 
-import com.github.tomaslanger.chalk.Chalk;
+import alex.momotov.Ink;
 
 public class Wall extends Obj {
 
+    private static final String GLYPH = Ink.paint(Ink.SLATE, "+");
+
     @Override
-    String repr() {
-        return Chalk.on("+").gray().bold().toString();
+    public String glyph(int tick) {
+        return GLYPH;
     }
 }

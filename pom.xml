@@ -20,12 +20,6 @@
             <version>4.13.2</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>com.github.tomas-langer</groupId>
-            <artifactId>chalk</artifactId>
-            <version>1.0.2</version>
-        </dependency>
-
         <!-- https://mvnrepository.com/artifact/jline/jline -->
         <dependency>
             <groupId>jline</groupId>

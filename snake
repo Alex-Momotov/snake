@@ -1,2 +1,4 @@
 #!/bin/bash
-java -jar /Users/omomotov/_docs/_projects/snake/target/snake-1.0.jar "$@"
+# Runs the game from wherever this script happens to live.
+here="$(cd "$(dirname "$0")" && pwd)"
+exec java -jar "$here/target/snake-1.0.jar" "$@"

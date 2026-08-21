@@ -1,33 +1,35 @@
 package alex.momotov.reality;
 
-import jline.console.ConsoleReader;
 import org.junit.Test;
 
-import java.io.IOException;
-
+import static alex.momotov.reality.Direction.*;
 import static org.junit.Assert.*;
 
 public class DirectionTest {
 
-
     @Test
-    public void testIsOpositeTrue() {
-        assertTrue(Direction.UP.isOposite(Direction.DOWN));
-        assertTrue(Direction.DOWN.isOposite(Direction.UP));
-        assertTrue(Direction.LEFT.isOposite(Direction.RIGHT));
-        assertTrue(Direction.RIGHT.isOposite(Direction.LEFT));
+    public void oppositesPairUp() {
+        assertEquals(DOWN, UP.opposite());
+        assertEquals(UP, DOWN.opposite());
+        assertEquals(RIGHT, LEFT.opposite());
+        assertEquals(LEFT, RIGHT.opposite());
     }
 
     @Test
-    public void testIsOpositeFalse() {
-        assertFalse(Direction.UP.isOposite(Direction.LEFT));
-        assertFalse(Direction.UP.isOposite(Direction.RIGHT));
-        assertFalse(Direction.DOWN.isOposite(Direction.LEFT));
-        assertFalse(Direction.DOWN.isOposite(Direction.RIGHT));
-        assertFalse(Direction.LEFT.isOposite(Direction.UP));
-        assertFalse(Direction.LEFT.isOposite(Direction.DOWN));
-        assertFalse(Direction.RIGHT.isOposite(Direction.UP));
-        assertFalse(Direction.RIGHT.isOposite(Direction.DOWN));
+    public void isOppositeIsTrueOnlyForTheOpposite() {
+        for (Direction d : values()) {
+            for (Direction other : values())
+                assertEquals(d.opposite() == other, d.isOpposite(other));
+        }
     }
 
+    @Test
+    public void deltasMatchScreenCoordinates() {
+        assertEquals(-1, UP.rowDelta);
+        assertEquals(1, DOWN.rowDelta);
+        assertEquals(-1, LEFT.colDelta);
+        assertEquals(1, RIGHT.colDelta);
+        for (Direction d : values())
+            assertEquals(0, d.rowDelta + d.opposite().rowDelta + d.colDelta + d.opposite().colDelta);
+    }
 }
